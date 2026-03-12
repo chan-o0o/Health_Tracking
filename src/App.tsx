@@ -13,8 +13,8 @@ function App() {
   const triggerRefresh = () => setRefreshTrigger(prev => prev + 1);
 
   return (
-    <div className="min-h-screen max-w-md mx-auto px-4 pt-6 pb-24">
-      <header className="mb-8 pt-4">
+    <div className="min-h-screen max-w-md mx-auto px-4 pt-12 pb-24" style={{ paddingTop: 'calc(env(safe-area-inset-top) + 2rem)' }}>
+      <header className="mb-8">
         <h1 className="text-4xl font-black tracking-tighter">
           {activeTab === 'today' ? 'HEALTH TRACKER' : 'HISTORY'}
         </h1>

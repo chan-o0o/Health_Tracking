@@ -199,7 +199,7 @@ export default function HistorySection({ refreshTrigger }: HistorySectionProps) 
         ) : (
           Object.entries(dayGroups).map(([day, dayLogs]) => (
             <div key={day} className="space-y-5">
-              <h3 className="text-sm font-black text-zinc-400 uppercase tracking-widest sticky top-0 bg-zinc-950/90 backdrop-blur-xl py-3 z-10 border-b border-zinc-900/50">
+              <h3 className="text-sm font-black text-zinc-400 uppercase tracking-widest sticky top-12 bg-zinc-950/90 backdrop-blur-xl py-3 z-10 border-b border-zinc-900/50" style={{ top: 'calc(env(safe-area-inset-top) + 2rem)' }}>
                 {day}
               </h3>
               
