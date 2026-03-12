@@ -62,7 +62,7 @@ export default function WorkoutSection({ onUpdate }: WorkoutSectionProps) {
             <button
               key={muscle}
               onClick={() => toggleMuscle(muscle)}
-              className={`px-5 py-3 rounded-full text-base font-bold transition-all ${
+              className={`px-4 py-2.5 rounded-full text-sm font-bold transition-all ${
                 selectedMuscles.includes(muscle)
                   ? 'bg-blue-500 text-white border border-blue-400 shadow-md'
                   : 'bg-zinc-800 text-zinc-400 border border-zinc-700'
