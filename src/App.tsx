@@ -4,7 +4,7 @@ import WorkoutSection from './components/WorkoutSection';
 import WeightSection from './components/WeightSection';
 import Timeline from './components/Timeline';
 import HistorySection from './components/HistorySection';
-import { Layout, History as HistoryIcon, Home } from 'lucide-react';
+import { History as HistoryIcon, Home } from 'lucide-react';
 
 function App() {
   const [refreshTrigger, setRefreshTrigger] = useState(0);
