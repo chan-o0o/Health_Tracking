@@ -68,10 +68,10 @@ export default function FastingSection({ onUpdate }: FastingSectionProps) {
           <h2 className="font-bold text-lg">Fasting</h2>
         </div>
         <div className="flex flex-col items-end">
-          <span className="text-xs uppercase tracking-tighter text-zinc-500 font-bold">
+          <span className="text-sm uppercase tracking-tighter text-zinc-500 font-bold">
             {isEating ? 'Eating for' : 'Fasting for'}
           </span>
-          <span className="font-mono text-3xl font-bold tabular-nums">
+          <span className="font-mono text-4xl font-black tabular-nums">
             {elapsed}
           </span>
         </div>
@@ -79,7 +79,7 @@ export default function FastingSection({ onUpdate }: FastingSectionProps) {
 
       {isEating && (
         <div className="mb-4">
-          <label className="block text-xs font-bold text-zinc-500 mb-2 uppercase tracking-widest">
+          <label className="block text-sm font-bold text-zinc-500 mb-2 uppercase tracking-widest">
             What are you eating? (2 sentences max)
           </label>
           <textarea
@@ -87,7 +87,7 @@ export default function FastingSection({ onUpdate }: FastingSectionProps) {
             onChange={(e) => setEatingNote(e.target.value)}
             placeholder="e.g., Chicken breast and salad. Low carb meal."
             rows={2}
-            className="w-full bg-zinc-800 border border-zinc-700 rounded-2xl p-4 text-sm font-medium focus:outline-none focus:border-orange-500 transition-colors placeholder:text-zinc-600 resize-none"
+            className="w-full bg-zinc-800 border border-zinc-700 rounded-2xl p-5 text-base font-medium focus:outline-none focus:border-orange-500 transition-colors placeholder:text-zinc-600 resize-none"
           />
         </div>
       )}
@@ -97,14 +97,14 @@ export default function FastingSection({ onUpdate }: FastingSectionProps) {
         className={`btn-large ${
           isEating 
             ? 'bg-zinc-100 text-zinc-950 active:bg-zinc-300' 
-            : 'bg-orange-500 text-white active:bg-orange-600'
+            : 'bg-orange-500 text-white active:bg-orange-600 shadow-lg shadow-orange-500/20'
         }`}
       >
-        <Utensils className="w-6 h-6 mr-2" />
+        <Utensils className="w-8 h-8 mr-2" />
         {isEating ? '먹었음 (Stop Eating)' : '먹었음 (Start Eating)'}
       </button>
       
-      <p className="text-sm text-center mt-3 text-zinc-500 font-medium">
+      <p className="text-base text-center mt-3 text-zinc-500 font-bold">
         Last event: {lastLog ? format(new Date(lastLog.timestamp), 'HH:mm:ss') : 'None'}
       </p>
     </div>

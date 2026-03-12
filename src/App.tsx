@@ -15,11 +15,11 @@ function App() {
   return (
     <div className="min-h-screen max-w-md mx-auto px-4 pt-6 pb-24">
       <header className="flex items-center justify-between mb-8">
-        <h1 className="text-2xl font-black tracking-tight flex items-center gap-2">
-          <Layout className="w-6 h-6" />
+        <h1 className="text-3xl font-black tracking-tight flex items-center gap-2">
+          <Layout className="w-8 h-8" />
           {activeTab === 'today' ? 'HEALTH TRAK' : 'LOG HISTORY'}
         </h1>
-        <div className="text-xs font-mono text-zinc-500 uppercase tracking-widest">
+        <div className="text-base font-mono text-zinc-500 uppercase tracking-widest font-bold">
           {new Date().toLocaleDateString('ko-KR', { year: '2-digit', month: '2-digit', day: '2-digit' })}
         </div>
       </header>
@@ -32,7 +32,7 @@ function App() {
             <WeightSection onUpdate={triggerRefresh} />
             
             <div className="pt-4 border-t border-zinc-900">
-              <h2 className="text-sm font-bold text-zinc-500 uppercase tracking-widest mb-4">Quick Timeline</h2>
+              <h2 className="text-base font-bold text-zinc-500 uppercase tracking-widest mb-4">Quick Timeline</h2>
               <Timeline refreshTrigger={refreshTrigger} />
             </div>
           </>
@@ -42,20 +42,20 @@ function App() {
       </main>
 
       {/* Bottom Navigation */}
-      <nav className="fixed bottom-0 left-0 right-0 bg-zinc-950/80 backdrop-blur-xl border-t border-zinc-900 px-6 py-4 flex justify-around items-center z-50 max-w-md mx-auto">
+      <nav className="fixed bottom-0 left-0 right-0 bg-zinc-950/80 backdrop-blur-xl border-t border-zinc-900 px-6 py-5 flex justify-around items-center z-50 max-w-md mx-auto">
         <button 
           onClick={() => setActiveTab('today')}
-          className={`flex flex-col items-center gap-1 transition-colors ${activeTab === 'today' ? 'text-zinc-100' : 'text-zinc-600'}`}
+          className={`flex flex-col items-center gap-1.5 transition-colors ${activeTab === 'today' ? 'text-zinc-100' : 'text-zinc-600'}`}
         >
-          <Home className="w-6 h-6" />
-          <span className="text-[10px] font-bold uppercase tracking-widest">Today</span>
+          <Home className="w-8 h-8" />
+          <span className="text-xs font-bold uppercase tracking-widest">Today</span>
         </button>
         <button 
           onClick={() => setActiveTab('history')}
-          className={`flex flex-col items-center gap-1 transition-colors ${activeTab === 'history' ? 'text-zinc-100' : 'text-zinc-600'}`}
+          className={`flex flex-col items-center gap-1.5 transition-colors ${activeTab === 'history' ? 'text-zinc-100' : 'text-zinc-600'}`}
         >
-          <HistoryIcon className="w-6 h-6" />
-          <span className="text-[10px] font-bold uppercase tracking-widest">History</span>
+          <HistoryIcon className="w-8 h-8" />
+          <span className="text-xs font-bold uppercase tracking-widest">History</span>
         </button>
       </nav>
     </div>

@@ -62,9 +62,9 @@ export default function WorkoutSection({ onUpdate }: WorkoutSectionProps) {
             <button
               key={muscle}
               onClick={() => toggleMuscle(muscle)}
-              className={`px-4 py-2 rounded-full text-sm font-bold transition-all ${
+              className={`px-5 py-3 rounded-full text-base font-bold transition-all ${
                 selectedMuscles.includes(muscle)
-                  ? 'bg-blue-500 text-white border border-blue-400'
+                  ? 'bg-blue-500 text-white border border-blue-400 shadow-md'
                   : 'bg-zinc-800 text-zinc-400 border border-zinc-700'
               }`}
             >
@@ -78,14 +78,14 @@ export default function WorkoutSection({ onUpdate }: WorkoutSectionProps) {
             onClick={handleStart}
             className="btn-large bg-blue-500 text-white active:bg-blue-600 shadow-lg shadow-blue-500/20"
           >
-            <Dumbbell className="w-6 h-6 mr-2" />
+            <Dumbbell className="w-8 h-8 mr-2" />
             운동 시작 (Start Workout)
           </button>
         ) : (
           <div className="space-y-4">
-            <div className="flex flex-col gap-1 p-3 bg-blue-500/10 rounded-2xl border border-blue-500/20">
-              <span className="text-[10px] uppercase font-black text-blue-500 tracking-widest">Active Focus</span>
-              <span className="text-base font-bold text-zinc-200">
+            <div className="flex flex-col gap-1.5 p-4 bg-blue-500/10 rounded-2xl border border-blue-500/20">
+              <span className="text-xs uppercase font-black text-blue-500 tracking-widest">Active Focus</span>
+              <span className="text-lg font-bold text-zinc-200">
                 {selectedMuscles.join(', ') || 'General Training'}
               </span>
             </div>
@@ -93,7 +93,7 @@ export default function WorkoutSection({ onUpdate }: WorkoutSectionProps) {
               onClick={handleEnd}
               className="btn-large bg-zinc-100 text-zinc-950 active:bg-zinc-300"
             >
-              <X className="w-6 h-6 mr-2" />
+              <X className="w-8 h-8 mr-2" />
               운동 종료 (End Workout)
             </button>
           </div>

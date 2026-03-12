@@ -78,13 +78,13 @@ export default function WeightSection({ onUpdate }: WeightSectionProps) {
               value={weight}
               onChange={(e) => setWeight(e.target.value)}
               placeholder="78.5"
-              className="w-full bg-zinc-800 border border-zinc-700 rounded-2xl h-16 px-4 pt-4 text-xl font-bold focus:outline-none focus:border-emerald-500 transition-colors"
+              className="w-full bg-zinc-800 border border-zinc-700 rounded-2xl h-20 px-6 pt-5 text-3xl font-black focus:outline-none focus:border-emerald-500 transition-colors"
             />
-            <span className="absolute right-4 top-1/2 -translate-y-1/2 text-zinc-500 font-bold uppercase text-xs">kg</span>
+            <span className="absolute right-6 top-1/2 -translate-y-1/2 text-zinc-500 font-black uppercase text-base">kg</span>
           </div>
 
-          <label className="w-16 h-16 bg-zinc-800 border-2 border-dashed border-zinc-700 rounded-2xl flex items-center justify-center active:bg-zinc-700 cursor-pointer">
-            <Camera className="w-6 h-6 text-zinc-500" />
+          <label className="w-20 h-20 bg-zinc-800 border-2 border-dashed border-zinc-700 rounded-2xl flex items-center justify-center active:bg-zinc-700 cursor-pointer shadow-inner">
+            <Camera className="w-8 h-8 text-zinc-500" />
             <input
               type="file"
               accept="image/*"
@@ -98,13 +98,13 @@ export default function WeightSection({ onUpdate }: WeightSectionProps) {
         {previewUrls.length > 0 && (
           <div className="flex gap-2">
             {previewUrls.map((url, i) => (
-              <div key={i} className="relative w-16 h-16 rounded-xl overflow-hidden group">
+              <div key={i} className="relative w-20 h-20 rounded-2xl overflow-hidden group shadow-lg">
                 <img src={url} alt="Progress" className="w-full h-full object-cover" />
                 <button
                   onClick={() => removePhoto(i)}
-                  className="absolute top-1 right-1 bg-black/50 rounded-full p-0.5"
+                  className="absolute top-1.5 right-1.5 bg-black/70 rounded-full p-1 shadow-md"
                 >
-                  <X className="w-3 h-3 text-white" />
+                  <X className="w-4 h-4 text-white" />
                 </button>
               </div>
             ))}
@@ -115,7 +115,7 @@ export default function WeightSection({ onUpdate }: WeightSectionProps) {
           onClick={handleSave}
           className="btn-large bg-emerald-500 text-white active:bg-emerald-600 shadow-lg shadow-emerald-500/20"
         >
-          <Scale className="w-6 h-6 mr-2" />
+          <Scale className="w-8 h-8 mr-2" />
           Add Weight
         </button>
       </div>

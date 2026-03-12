@@ -45,13 +45,13 @@ export default function Timeline({ refreshTrigger }: TimelineProps) {
         <PhotoModal photo={selectedPhoto} onClose={() => setSelectedPhoto(null)} />
       )}
       {Object.entries(dayGroups).map(([day, dayLogs]) => (
-        <div key={day} className="space-y-3">
-          <div className="flex items-center gap-2">
-            <span className="text-sm font-black text-zinc-100">{day}</span>
-            <div className="flex-1 h-px bg-zinc-900"></div>
+        <div key={day} className="space-y-4">
+          <div className="flex items-center gap-3">
+            <span className="text-lg font-black text-zinc-100">{day}</span>
+            <div className="flex-1 h-px bg-zinc-800"></div>
           </div>
           
-          <div className="space-y-2">
+          <div className="space-y-3">
             {dayLogs.map((log) => {
               if (log.type === 'fasting') {
                 const nextLog = logs.find(l => l.type === 'fasting' && l.timestamp > log.timestamp);
@@ -62,21 +62,21 @@ export default function Timeline({ refreshTrigger }: TimelineProps) {
                     : '(ongoing)';
 
                 return (
-                  <div key={log.id} className="flex flex-col gap-2 p-4 bg-zinc-900/30 rounded-2xl border border-zinc-800/50">
+                  <div key={log.id} className="flex flex-col gap-3 p-5 bg-zinc-900/40 rounded-3xl border border-zinc-800/60 shadow-sm">
                     <div className="flex items-start gap-4">
-                      <div className={`p-2.5 rounded-xl ${isFasting ? 'bg-orange-500/10 text-orange-500' : 'bg-zinc-800 text-zinc-400'}`}>
-                        <Utensils className="w-5 h-5" />
+                      <div className={`p-3 rounded-2xl ${isFasting ? 'bg-orange-500/15 text-orange-500' : 'bg-zinc-800 text-zinc-400'}`}>
+                        <Utensils className="w-6 h-6" />
                       </div>
                       <div className="flex-1">
                         <div className="flex justify-between items-center">
-                          <span className="text-base font-bold">{typeLabel} {durationStr}</span>
-                          <span className="text-xs font-mono text-zinc-500">{format(new Date(log.timestamp), 'HH:mm')}</span>
+                          <span className="text-lg font-bold">{typeLabel} <span className="text-zinc-500 font-medium ml-1">{durationStr}</span></span>
+                          <span className="text-sm font-mono text-zinc-500 font-bold">{format(new Date(log.timestamp), 'HH:mm')}</span>
                         </div>
                       </div>
                     </div>
                     {log.data.note && (
-                      <div className="ml-14 p-3 bg-zinc-800/50 rounded-xl border border-zinc-700/30">
-                        <p className="text-sm italic text-zinc-400 leading-relaxed font-medium whitespace-pre-line">
+                      <div className="ml-16 p-4 bg-zinc-800/40 rounded-2xl border border-zinc-700/20">
+                        <p className="text-base italic text-zinc-300 leading-relaxed font-medium whitespace-pre-line">
                           "{log.data.note}"
                         </p>
                       </div>
@@ -92,16 +92,16 @@ export default function Timeline({ refreshTrigger }: TimelineProps) {
                     : 'ongoing';
 
                 return (
-                  <div key={log.id} className="flex items-start gap-4 p-4 bg-zinc-900/30 rounded-2xl border border-zinc-800/50">
-                    <div className="p-2.5 rounded-xl bg-blue-500/10 text-blue-500">
-                      <Dumbbell className="w-5 h-5" />
+                  <div key={log.id} className="flex items-start gap-4 p-5 bg-zinc-900/40 rounded-3xl border border-zinc-800/60 shadow-sm">
+                    <div className="p-3 rounded-2xl bg-blue-500/15 text-blue-500">
+                      <Dumbbell className="w-6 h-6" />
                     </div>
                     <div className="flex-1">
                       <div className="flex justify-between items-center">
-                        <span className="text-base font-bold">Workout: {durationStr}</span>
-                        <span className="text-xs font-mono text-zinc-500">{format(new Date(log.timestamp), 'HH:mm')}</span>
+                        <span className="text-lg font-bold">Workout: <span className="text-blue-500 font-black">{durationStr}</span></span>
+                        <span className="text-sm font-mono text-zinc-500 font-bold">{format(new Date(log.timestamp), 'HH:mm')}</span>
                       </div>
-                      <div className="text-xs text-zinc-500 mt-1 font-bold uppercase tracking-wider">
+                      <div className="text-sm text-zinc-400 mt-2 font-black uppercase tracking-widest bg-zinc-800/50 inline-block px-2.5 py-1 rounded-lg">
                         {log.data.muscleGroups?.join(', ') || 'General'}
                       </div>
                     </div>
@@ -111,24 +111,24 @@ export default function Timeline({ refreshTrigger }: TimelineProps) {
 
               if (log.type === 'weight') {
                 return (
-                  <div key={log.id} className="flex flex-col gap-3 p-4 bg-zinc-900/30 rounded-2xl border border-zinc-800/50">
+                  <div key={log.id} className="flex flex-col gap-4 p-5 bg-zinc-900/40 rounded-3xl border border-zinc-800/60 shadow-sm">
                     <div className="flex items-start gap-4">
-                        <div className="p-2.5 rounded-xl bg-emerald-500/10 text-emerald-500">
-                        <Scale className="w-5 h-5" />
+                        <div className="p-3 rounded-2xl bg-emerald-500/15 text-emerald-500">
+                        <Scale className="w-6 h-6" />
                         </div>
                         <div className="flex-1">
                         <div className="flex justify-between items-center">
-                            <span className="text-base font-bold">Weight: {log.data.value} kg</span>
-                            <span className="text-xs font-mono text-zinc-500">{format(new Date(log.timestamp), 'HH:mm')}</span>
+                            <span className="text-lg font-bold">Weight: <span className="text-emerald-500 font-black">{log.data.value} kg</span></span>
+                            <span className="text-sm font-mono text-zinc-500 font-bold">{format(new Date(log.timestamp), 'HH:mm')}</span>
                         </div>
                         </div>
                     </div>
                     {log.data.photos && log.data.photos.length > 0 && (
-                        <div className="flex gap-2 ml-14">
+                        <div className="flex gap-3 ml-16">
                             {log.data.photos.map((photo: Blob, idx: number) => (
                                 <div 
                                     key={idx} 
-                                    className="w-20 h-20 rounded-xl overflow-hidden border border-zinc-800 shadow-lg active:scale-95 transition-transform cursor-pointer"
+                                    className="w-24 h-24 rounded-2xl overflow-hidden border border-zinc-700/50 shadow-md active:scale-95 transition-transform cursor-pointer"
                                     onClick={() => setSelectedPhoto(photo)}
                                 >
                                     <img 
@@ -152,4 +152,3 @@ export default function Timeline({ refreshTrigger }: TimelineProps) {
     </div>
   );
 }
-

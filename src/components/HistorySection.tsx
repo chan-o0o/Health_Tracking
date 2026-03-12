@@ -98,26 +98,26 @@ export default function HistorySection({ refreshTrigger }: HistorySectionProps) 
 
       {/* Quick Stats */}
       <div className="grid grid-cols-2 gap-4">
-        <div className="card mb-0 flex flex-col items-center justify-center p-4">
-          <span className="text-[10px] uppercase text-zinc-500 font-black">Workouts this week</span>
-          <span className="text-2xl font-black text-blue-500">{workoutCount}</span>
+        <div className="card mb-0 flex flex-col items-center justify-center p-5">
+          <span className="text-xs uppercase text-zinc-500 font-black tracking-widest mb-1">Workouts this week</span>
+          <span className="text-3xl font-black text-blue-500">{workoutCount}</span>
         </div>
-        <div className="card mb-0 flex flex-col items-center justify-center p-4">
-          <span className="text-[10px] uppercase text-zinc-500 font-black">Latest Weight</span>
-          <span className="text-2xl font-black text-emerald-500">{latestWeight}<small className="text-xs ml-1">kg</small></span>
+        <div className="card mb-0 flex flex-col items-center justify-center p-5">
+          <span className="text-xs uppercase text-zinc-500 font-black tracking-widest mb-1">Latest Weight</span>
+          <span className="text-3xl font-black text-emerald-500">{latestWeight}<small className="text-sm ml-1 font-bold">kg</small></span>
         </div>
       </div>
 
       {/* View Toggle & Filters */}
       <div className="flex flex-col gap-4">
         <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2 overflow-x-auto no-scrollbar py-1 flex-1">
-                <Filter className="w-4 h-4 text-zinc-500 flex-shrink-0" />
+            <div className="flex items-center gap-2 overflow-x-auto no-scrollbar py-2 flex-1">
+                <Filter className="w-5 h-5 text-zinc-500 flex-shrink-0" />
                 {(['all', 'fasting', 'workout', 'weight'] as const).map(f => (
                 <button
                     key={f}
                     onClick={() => setFilter(f)}
-                    className={`px-4 py-1.5 rounded-full text-xs font-bold capitalize whitespace-nowrap transition-all ${
+                    className={`px-5 py-2 rounded-full text-sm font-black capitalize whitespace-nowrap transition-all ${
                     filter === f ? 'bg-zinc-100 text-zinc-950' : 'bg-zinc-900 text-zinc-500 border border-zinc-800'
                     }`}
                 >
@@ -125,18 +125,18 @@ export default function HistorySection({ refreshTrigger }: HistorySectionProps) 
                 </button>
                 ))}
             </div>
-            <div className="flex bg-zinc-900 rounded-2xl p-1 border border-zinc-800 ml-4">
+            <div className="flex bg-zinc-900 rounded-2xl p-1.5 border border-zinc-800 ml-4">
                 <button 
                     onClick={() => setViewMode('calendar')}
-                    className={`p-2 rounded-xl transition-all ${viewMode === 'calendar' ? 'bg-zinc-100 text-zinc-950 shadow-lg' : 'text-zinc-500'}`}
+                    className={`p-2.5 rounded-xl transition-all ${viewMode === 'calendar' ? 'bg-zinc-100 text-zinc-950 shadow-lg' : 'text-zinc-500'}`}
                 >
-                    <CalendarIcon className="w-4 h-4" />
+                    <CalendarIcon className="w-5 h-5" />
                 </button>
                 <button 
                     onClick={() => setViewMode('list')}
-                    className={`p-2 rounded-xl transition-all ${viewMode === 'list' ? 'bg-zinc-100 text-zinc-950 shadow-lg' : 'text-zinc-500'}`}
+                    className={`p-2.5 rounded-xl transition-all ${viewMode === 'list' ? 'bg-zinc-100 text-zinc-950 shadow-lg' : 'text-zinc-500'}`}
                 >
-                    <List className="w-4 h-4" />
+                    <List className="w-5 h-5" />
                 </button>
             </div>
         </div>
@@ -158,17 +158,17 @@ export default function HistorySection({ refreshTrigger }: HistorySectionProps) 
       {/* History List */}
       <div className="space-y-8">
         {Object.keys(dayGroups).length === 0 ? (
-           <div className="text-center py-12">
-             <p className="text-zinc-500 font-bold text-sm uppercase tracking-widest">No entries for this view</p>
+           <div className="text-center py-16">
+             <p className="text-zinc-500 font-black text-base uppercase tracking-widest">No entries for this view</p>
            </div>
         ) : (
           Object.entries(dayGroups).map(([day, dayLogs]) => (
-            <div key={day} className="space-y-4">
-              <h3 className="text-xs font-black text-zinc-500 uppercase tracking-widest sticky top-0 bg-zinc-950/80 backdrop-blur py-2 z-10">
+            <div key={day} className="space-y-5">
+              <h3 className="text-sm font-black text-zinc-400 uppercase tracking-widest sticky top-0 bg-zinc-950/90 backdrop-blur-xl py-3 z-10 border-b border-zinc-900/50">
                 {day}
               </h3>
               
-              <div className="space-y-3">
+              <div className="space-y-4">
                 {dayLogs.map((log) => {
                   const isFasting = log.type === 'fasting';
                   const isWorkout = log.type === 'workout';
@@ -176,32 +176,32 @@ export default function HistorySection({ refreshTrigger }: HistorySectionProps) 
 
                   return (
                     <div key={log.id} className="group relative">
-                      <div className="flex items-start gap-4 p-4 bg-zinc-900/50 rounded-3xl border border-zinc-800/50">
+                      <div className="flex items-start gap-5 p-5 bg-zinc-900/40 rounded-[2rem] border border-zinc-800/60 shadow-sm">
                         {isFasting && (
-                          <div className={`p-2.5 rounded-2xl ${!log.data.isEating ? 'bg-orange-500/10 text-orange-500' : 'bg-zinc-800 text-zinc-400'}`}>
-                            <Utensils className="w-5 h-5" />
+                          <div className={`p-3.5 rounded-2xl ${!log.data.isEating ? 'bg-orange-500/15 text-orange-500' : 'bg-zinc-800 text-zinc-400'}`}>
+                            <Utensils className="w-6 h-6" />
                           </div>
                         )}
                         {isWorkout && (
-                          <div className="p-2.5 rounded-2xl bg-blue-500/10 text-blue-500">
-                            <Dumbbell className="w-5 h-5" />
+                          <div className="p-3.5 rounded-2xl bg-blue-500/15 text-blue-500">
+                            <Dumbbell className="w-6 h-6" />
                           </div>
                         )}
                         {isWeight && (
-                          <div className="p-2.5 rounded-2xl bg-emerald-500/10 text-emerald-500">
-                            <Scale className="w-5 h-5" />
+                          <div className="p-3.5 rounded-2xl bg-emerald-500/15 text-emerald-500">
+                            <Scale className="w-6 h-6" />
                           </div>
                         )}
 
                         <div className="flex-1 min-w-0">
-                          <div className="flex justify-between items-start mb-1">
-                            <div className="font-bold text-sm">
+                          <div className="flex justify-between items-start mb-2">
+                            <div className="font-black text-lg">
                               {isFasting && (
                                 <span>
                                   {!log.data.isEating ? 'Started Fasting' : 'Started Eating'}
                                   {(() => {
                                     const nextLog = logs.find(l => l.type === 'fasting' && l.timestamp > log.timestamp);
-                                    return nextLog ? <span className="text-zinc-500 font-normal ml-2">({getDuration(new Date(log.timestamp), new Date(nextLog.timestamp))})</span> : null;
+                                    return nextLog ? <span className="text-zinc-500 font-bold ml-2">({getDuration(new Date(log.timestamp), new Date(nextLog.timestamp))})</span> : null;
                                   })()}
                                 </span>
                               )}
@@ -210,37 +210,37 @@ export default function HistorySection({ refreshTrigger }: HistorySectionProps) 
                                   {log.data.action === 'start' ? 'Workout Started' : 'Workout Ended'}
                                   {log.data.action === 'start' && (() => {
                                      const endLog = logs.find(l => l.type === 'workout' && l.data.action === 'end' && l.timestamp > log.timestamp);
-                                     return endLog ? <span className="text-zinc-500 font-normal ml-2">({getDuration(new Date(log.timestamp), new Date(endLog.timestamp))})</span> : null;
+                                     return endLog ? <span className="text-zinc-500 font-bold ml-2">({getDuration(new Date(log.timestamp), new Date(endLog.timestamp))})</span> : null;
                                   })()}
                                 </span>
                               )}
-                              {isWeight && <span>Weight: {log.data.value}kg</span>}
+                              {isWeight && <span>Weight: <span className="text-emerald-500">{log.data.value}kg</span></span>}
                             </div>
-                            <span className="text-xs font-mono text-zinc-500">{format(new Date(log.timestamp), 'HH:mm')}</span>
+                            <span className="text-sm font-mono text-zinc-500 font-black">{format(new Date(log.timestamp), 'HH:mm')}</span>
                           </div>
 
                           {isFasting && log.data.note && (
-                            <div className="mt-2 p-3 bg-zinc-800/50 rounded-xl border border-zinc-700/30">
-                              <p className="text-sm italic text-zinc-400 leading-relaxed font-medium whitespace-pre-line">
+                            <div className="mt-3 p-4 bg-zinc-800/40 rounded-2xl border border-zinc-700/20">
+                              <p className="text-base italic text-zinc-300 leading-relaxed font-medium whitespace-pre-line">
                                 "{log.data.note}"
                               </p>
                             </div>
                           )}
 
                           {isWorkout && log.data.muscleGroups && (
-                            <div className="flex flex-wrap gap-1 mt-2">
+                            <div className="flex flex-wrap gap-2 mt-3">
                               {log.data.muscleGroups.map((m: string) => (
-                                <span key={m} className="px-2.5 py-1 bg-zinc-800 rounded-lg text-xs text-zinc-400 font-bold uppercase tracking-wider border border-zinc-700/50">{m}</span>
+                                <span key={m} className="px-3 py-1 bg-zinc-800 rounded-xl text-xs text-zinc-300 font-black uppercase tracking-widest border border-zinc-700/50 shadow-sm">{m}</span>
                               ))}
                             </div>
                           )}
 
                           {isWeight && log.data.photos && log.data.photos.length > 0 && (
-                            <div className="flex gap-2 mt-3">
+                            <div className="flex gap-3 mt-4">
                               {log.data.photos.map((photo: Blob, idx: number) => (
                                 <div 
                                   key={idx} 
-                                  className="w-20 h-20 rounded-2xl overflow-hidden border border-zinc-800 active:scale-95 transition-transform cursor-pointer"
+                                  className="w-24 h-24 rounded-2xl overflow-hidden border border-zinc-700/50 active:scale-95 transition-transform cursor-pointer shadow-md"
                                   onClick={() => setSelectedPhoto(photo)}
                                 >
                                   <img src={URL.createObjectURL(photo)} alt="Progress" className="w-full h-full object-cover" />
@@ -252,9 +252,9 @@ export default function HistorySection({ refreshTrigger }: HistorySectionProps) 
 
                         <button 
                           onClick={() => handleDelete(log.id!)}
-                          className="opacity-0 group-hover:opacity-100 p-2 text-zinc-600 hover:text-red-500 transition-opacity"
+                          className="opacity-0 group-hover:opacity-100 p-2 text-zinc-700 hover:text-red-500 transition-opacity"
                         >
-                          <Trash2 className="w-4 h-4" />
+                          <Trash2 className="w-5 h-5" />
                         </button>
                       </div>
                     </div>
