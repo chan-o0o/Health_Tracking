@@ -14,14 +14,10 @@ function App() {
 
   return (
     <div className="min-h-screen max-w-md mx-auto px-4 pt-6 pb-24">
-      <header className="flex items-center justify-between mb-8">
-        <h1 className="text-3xl font-black tracking-tight flex items-center gap-2">
-          <Layout className="w-8 h-8" />
-          {activeTab === 'today' ? 'HEALTH TRAK' : 'LOG HISTORY'}
+      <header className="mb-8 pt-4">
+        <h1 className="text-4xl font-black tracking-tighter">
+          {activeTab === 'today' ? 'HEALTH TRACKER' : 'HISTORY'}
         </h1>
-        <div className="text-base font-mono text-zinc-500 uppercase tracking-widest font-bold">
-          {new Date().toLocaleDateString('ko-KR', { year: '2-digit', month: '2-digit', day: '2-digit' })}
-        </div>
       </header>
 
       <main className="space-y-8">
