@@ -74,13 +74,14 @@ export default function WeightSection({ onUpdate }: WeightSectionProps) {
           <div className="relative flex-1">
             <input
               type="number"
+              inputMode="decimal"
               step="0.1"
               value={weight}
               onChange={(e) => setWeight(e.target.value)}
               placeholder="78.5"
-              className="w-full bg-zinc-800 border border-zinc-700 rounded-2xl h-20 px-6 text-3xl font-black focus:outline-none focus:border-emerald-500 transition-colors"
+              className="w-full bg-zinc-800 border border-zinc-700 rounded-2xl h-20 px-6 text-3xl font-black focus:outline-none focus:border-emerald-500 transition-colors relative z-10"
             />
-            <span className="absolute right-6 top-1/2 -translate-y-1/2 text-zinc-500 font-black uppercase text-base">kg</span>
+            <span className="absolute right-6 top-1/2 -translate-y-1/2 text-zinc-500 font-black uppercase text-base z-0">kg</span>
           </div>
 
           <label className="w-20 h-20 bg-zinc-800 border-2 border-dashed border-zinc-700 rounded-2xl flex items-center justify-center active:bg-zinc-700 cursor-pointer shadow-inner">

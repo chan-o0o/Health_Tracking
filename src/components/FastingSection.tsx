@@ -87,7 +87,7 @@ export default function FastingSection({ onUpdate }: FastingSectionProps) {
             onChange={(e) => setEatingNote(e.target.value)}
             placeholder="e.g., Chicken breast and salad. Low carb meal."
             rows={2}
-            className="w-full bg-zinc-800 border border-zinc-700 rounded-2xl p-5 text-base font-medium focus:outline-none focus:border-orange-500 transition-colors placeholder:text-zinc-600 resize-none"
+            className="w-full bg-zinc-800 border border-zinc-700 rounded-2xl p-5 text-base font-medium focus:outline-none focus:border-orange-500 transition-colors placeholder:text-zinc-600 resize-none relative z-10"
           />
         </div>
       )}
