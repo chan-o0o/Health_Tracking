@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { db, type HealthLog, type LogType } from '../db/db';
 import { format, differenceInMinutes, startOfWeek, endOfWeek, isWithinInterval, isSameDay } from 'date-fns';
-import { Utensils, Dumbbell, Scale, Filter, Trash2, Calendar as CalendarIcon, List } from 'lucide-react';
+import { Utensils, Dumbbell, Scale, Filter, Trash2, Calendar as CalendarIcon, List, Download, Upload } from 'lucide-react';
 import Calendar from 'react-calendar';
 import PhotoModal from './PhotoModal';
 
@@ -18,6 +18,51 @@ export default function HistorySection({ refreshTrigger }: HistorySectionProps) 
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
   const [selectedPhoto, setSelectedPhoto] = useState<Blob | null>(null);
   const [fastingElapsed, setFastingElapsed] = useState<string>('00:00:00');
+
+  const handleExport = async () => {
+    try {
+      const allLogs = await db.logs.toArray();
+      const blob = new Blob([JSON.stringify(allLogs, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `health-data-${format(new Date(), 'yyyyMMdd')}.json`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+    } catch (error) {
+      alert('Failed to export data');
+    }
+  };
+
+  const handleImport = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    if (!confirm('This will merge the imported data with your current history. Continue?')) return;
+
+    const reader = new FileReader();
+    reader.onload = async (event) => {
+      try {
+        const json = JSON.parse(event.target?.result as string);
+        if (!Array.isArray(json)) throw new Error('Invalid format');
+
+        const formattedLogs = json.map(log => ({
+          ...log,
+          timestamp: new Date(log.timestamp),
+          id: undefined // New ID for each entry to avoid collisions
+        }));
+
+        await db.logs.bulkAdd(formattedLogs);
+        alert('Successfully imported!');
+        window.location.reload();
+      } catch (error) {
+        alert('Failed to import. Please check if the file is a valid JSON export.');
+      }
+    };
+    reader.readAsText(file);
+  };
 
   useEffect(() => {
     const fetchLogs = async () => {
@@ -298,7 +343,27 @@ export default function HistorySection({ refreshTrigger }: HistorySectionProps) 
               </div>
             </div>
           ))
-        )}
+      {/* Data Management */}
+      <div className="pt-10 mt-10 border-t border-zinc-900 flex flex-col gap-5">
+        <h3 className="text-xs font-black text-zinc-500 uppercase tracking-widest text-center">Data Management</h3>
+        <div className="flex gap-4">
+          <button
+            onClick={handleExport}
+            className="flex-1 flex items-center justify-center gap-2 py-4 bg-zinc-900/50 border border-zinc-800 rounded-3xl text-zinc-400 font-bold active:bg-zinc-800 transition-colors"
+          >
+            <Download className="w-5 h-5" />
+            Export
+          </button>
+          <label className="flex-1 flex items-center justify-center gap-2 py-4 bg-zinc-900/50 border border-zinc-800 rounded-3xl text-zinc-400 font-bold active:bg-zinc-800 transition-colors cursor-pointer">
+            <Upload className="w-5 h-5" />
+            Import
+            <input type="file" accept=".json" onChange={handleImport} className="hidden" />
+          </label>
+        </div>
+        <p className="text-[10px] text-zinc-600 text-center leading-relaxed px-6 pb-10">
+          Your data is stored locally in your browser. <br/>
+          Export a backup regularly to avoid data loss.
+        </p>
       </div>
     </div>
   );
