@@ -17,6 +17,7 @@ export default function HistorySection({ refreshTrigger }: HistorySectionProps) 
   const [viewMode, setViewMode] = useState<ViewMode>('calendar');
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
   const [selectedPhoto, setSelectedPhoto] = useState<Blob | null>(null);
+  const [fastingElapsed, setFastingElapsed] = useState<string>('00:00:00');
 
   useEffect(() => {
     const fetchLogs = async () => {
@@ -26,6 +27,29 @@ export default function HistorySection({ refreshTrigger }: HistorySectionProps) 
     };
     fetchLogs();
   }, [refreshTrigger]);
+
+  const lastFastingLog = logs.find(l => l.type === 'fasting');
+  const isCurrentlyFasting = lastFastingLog && !lastFastingLog.data.isEating;
+
+  useEffect(() => {
+    if (!isCurrentlyFasting) {
+      setFastingElapsed('00:00:00');
+      return;
+    }
+
+    const interval = setInterval(() => {
+      const diff = new Date().getTime() - new Date(lastFastingLog.timestamp).getTime();
+      const hours = Math.floor(diff / (1000 * 60 * 60));
+      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+      
+      setFastingElapsed(
+        `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`
+      );
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [isCurrentlyFasting, lastFastingLog]);
 
   const handleDelete = async (id: number) => {
     if (confirm('Delete this log?')) {
@@ -67,8 +91,8 @@ export default function HistorySection({ refreshTrigger }: HistorySectionProps) 
   const weekLogs = logs.filter(l => isWithinInterval(new Date(l.timestamp), { start: weekStart, end: weekEnd }));
   
   const workoutCount = weekLogs.filter(l => l.type === 'workout' && l.data.action === 'start').length;
-  const weightEntries = weekLogs.filter(l => l.type === 'weight');
-  const latestWeight = weightEntries.length > 0 ? weightEntries[0].data.value : '-';
+  const lastWeightLog = logs.find(l => l.type === 'weight');
+  const latestWeight = lastWeightLog ? lastWeightLog.data.value : '-';
 
   // Calendar tile content (dots)
   const getTileContent = ({ date, view }: { date: Date, view: string }) => {
@@ -97,14 +121,25 @@ export default function HistorySection({ refreshTrigger }: HistorySectionProps) 
       )}
 
       {/* Quick Stats */}
-      <div className="grid grid-cols-2 gap-4">
-        <div className="card mb-0 flex flex-col items-center justify-center p-5">
-          <span className="text-xs uppercase text-zinc-500 font-black tracking-widest mb-1">Workouts this week</span>
-          <span className="text-3xl font-black text-blue-500">{workoutCount}</span>
-        </div>
-        <div className="card mb-0 flex flex-col items-center justify-center p-5">
-          <span className="text-xs uppercase text-zinc-500 font-black tracking-widest mb-1">Latest Weight</span>
-          <span className="text-3xl font-black text-emerald-500">{latestWeight}<small className="text-sm ml-1 font-bold">kg</small></span>
+      <div className="space-y-4">
+        {isCurrentlyFasting && (
+          <div className="card mb-0 bg-orange-500/10 border-orange-500/20 flex flex-col items-center justify-center p-6 border-2 border-dashed">
+            <span className="text-xs uppercase text-orange-500 font-black tracking-widest mb-2 flex items-center gap-2">
+              <span className="w-2 h-2 bg-orange-500 rounded-full animate-pulse" />
+              Real-time Fasting
+            </span>
+            <span className="text-4xl font-black text-orange-500 font-mono tracking-tight">{fastingElapsed}</span>
+          </div>
+        )}
+        <div className="grid grid-cols-2 gap-4">
+          <div className="card mb-0 flex flex-col items-center justify-center p-5">
+            <span className="text-xs uppercase text-zinc-500 font-black tracking-widest mb-1">Workouts this week</span>
+            <span className="text-3xl font-black text-blue-500">{workoutCount}</span>
+          </div>
+          <div className="card mb-0 flex flex-col items-center justify-center p-5">
+            <span className="text-xs uppercase text-zinc-500 font-black tracking-widest mb-1">Latest Weight</span>
+            <span className="text-3xl font-black text-emerald-500">{latestWeight}<small className="text-sm ml-1 font-bold">kg</small></span>
+          </div>
         </div>
       </div>
 
@@ -194,7 +229,7 @@ export default function HistorySection({ refreshTrigger }: HistorySectionProps) 
                         )}
 
                         <div className="flex-1 min-w-0">
-                          <div className="flex justify-between items-start mb-2">
+                          <div className="flex justify-between items-start mb-2 gap-4">
                             <div className="font-black text-lg">
                               {isFasting && (
                                 <span>
@@ -216,7 +251,7 @@ export default function HistorySection({ refreshTrigger }: HistorySectionProps) 
                               )}
                               {isWeight && <span>Weight: <span className="text-emerald-500">{log.data.value}kg</span></span>}
                             </div>
-                            <span className="text-sm font-mono text-zinc-500 font-black">{format(new Date(log.timestamp), 'HH:mm')}</span>
+                            <span className="text-lg font-mono text-zinc-100 font-bold">{format(new Date(log.timestamp), 'HH:mm')}</span>
                           </div>
 
                           {isFasting && log.data.note && (

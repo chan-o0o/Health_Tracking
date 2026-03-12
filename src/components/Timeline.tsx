@@ -68,9 +68,9 @@ export default function Timeline({ refreshTrigger }: TimelineProps) {
                         <Utensils className="w-6 h-6" />
                       </div>
                       <div className="flex-1">
-                        <div className="flex justify-between items-center">
+                        <div className="flex justify-between items-center gap-4">
                           <span className="text-lg font-bold">{typeLabel} <span className="text-zinc-500 font-medium ml-1">{durationStr}</span></span>
-                          <span className="text-sm font-mono text-zinc-500 font-bold">{format(new Date(log.timestamp), 'HH:mm')}</span>
+                          <span className="text-lg font-mono text-zinc-100 font-bold">{format(new Date(log.timestamp), 'HH:mm')}</span>
                         </div>
                       </div>
                     </div>
@@ -97,9 +97,9 @@ export default function Timeline({ refreshTrigger }: TimelineProps) {
                       <Dumbbell className="w-6 h-6" />
                     </div>
                     <div className="flex-1">
-                      <div className="flex justify-between items-center">
+                      <div className="flex justify-between items-center gap-4">
                         <span className="text-lg font-bold">Workout: <span className="text-blue-500 font-black">{durationStr}</span></span>
-                        <span className="text-sm font-mono text-zinc-500 font-bold">{format(new Date(log.timestamp), 'HH:mm')}</span>
+                        <span className="text-lg font-mono text-zinc-100 font-bold">{format(new Date(log.timestamp), 'HH:mm')}</span>
                       </div>
                       <div className="text-sm text-zinc-400 mt-2 font-black uppercase tracking-widest bg-zinc-800/50 inline-block px-2.5 py-1 rounded-lg">
                         {log.data.muscleGroups?.join(', ') || 'General'}
@@ -117,9 +117,9 @@ export default function Timeline({ refreshTrigger }: TimelineProps) {
                         <Scale className="w-6 h-6" />
                         </div>
                         <div className="flex-1">
-                        <div className="flex justify-between items-center">
+                        <div className="flex justify-between items-center gap-4">
                             <span className="text-lg font-bold">Weight: <span className="text-emerald-500 font-black">{log.data.value} kg</span></span>
-                            <span className="text-sm font-mono text-zinc-500 font-bold">{format(new Date(log.timestamp), 'HH:mm')}</span>
+                            <span className="text-lg font-mono text-zinc-100 font-bold">{format(new Date(log.timestamp), 'HH:mm')}</span>
                         </div>
                         </div>
                     </div>
