@@ -28,38 +28,48 @@ export default function WeightSection({ onUpdate }: WeightSectionProps) {
     setPreviewUrls(prev => prev.filter((_, i) => i !== index));
   };
 
+  const [isSaving, setIsSaving] = useState(false);
+
   const handleSave = async () => {
-    if (!weight) return;
+    if (!weight || isSaving) return;
 
-    const today = new Date();
-    const todayStart = startOfDay(today);
-    const todayEnd = endOfDay(today);
+    try {
+      setIsSaving(true);
+      const today = new Date();
+      const todayStart = startOfDay(today);
+      const todayEnd = endOfDay(today);
 
-    // Check if entry exists for today
-    const existingEntry = await db.logs
-      .where('type').equals('weight')
-      .filter(log => {
-        const d = new Date(log.timestamp);
-        return d >= todayStart && d <= todayEnd;
-      })
-      .first();
+      // Check if entry exists for today
+      const existingEntry = await db.logs
+        .where('type').equals('weight')
+        .filter(log => {
+          const d = new Date(log.timestamp);
+          return d >= todayStart && d <= todayEnd;
+        })
+        .first();
 
-    if (existingEntry) {
-      await db.logs.update(existingEntry.id!, {
-        data: { value: parseFloat(weight), photos }
-      });
-    } else {
-      await db.logs.add({
-        type: 'weight',
-        timestamp: today,
-        data: { value: parseFloat(weight), photos }
-      });
+      if (existingEntry) {
+        await db.logs.update(existingEntry.id!, {
+          data: { value: parseFloat(weight), photos }
+        });
+      } else {
+        await db.logs.add({
+          type: 'weight',
+          timestamp: today,
+          data: { value: parseFloat(weight), photos }
+        });
+      }
+
+      setWeight('');
+      setPhotos([]);
+      setPreviewUrls([]);
+      onUpdate();
+    } catch (error) {
+      console.error('Failed to save weight:', error);
+      alert('Failed to save weight. Please try again.');
+    } finally {
+      setIsSaving(false);
     }
-
-    setWeight('');
-    setPhotos([]);
-    setPreviewUrls([]);
-    onUpdate();
   };
 
   return (
@@ -114,10 +124,11 @@ export default function WeightSection({ onUpdate }: WeightSectionProps) {
 
         <button
           onClick={handleSave}
-          className="btn-large bg-emerald-500 text-white active:bg-emerald-600 shadow-lg shadow-emerald-500/20"
+          disabled={!weight || isSaving}
+          className={`btn-large ${isSaving ? 'bg-zinc-700' : 'bg-emerald-500 shadow-lg shadow-emerald-500/20'} text-white active:bg-emerald-600 disabled:opacity-50`}
         >
           <Scale className="w-8 h-8 mr-2" />
-          Add Weight
+          {isSaving ? 'Saving...' : 'Add Weight'}
         </button>
       </div>
     </div>
