@@ -15,3 +15,57 @@ body {
     @apply bg-zinc-900/50 border border-zinc-800 rounded-3xl p-4 mb-4;
   }
 }
+
+/* Custom Calendar Styling */
+.react-calendar {
+  @apply w-full bg-zinc-900/50 border border-zinc-800 rounded-3xl p-4 font-sans text-zinc-100;
+}
+
+.react-calendar__navigation {
+  @apply flex h-11 mb-4;
+}
+
+.react-calendar__navigation button {
+  @apply min-w-[44px] bg-none text-zinc-100 font-bold text-lg active:bg-zinc-800 rounded-xl transition-colors disabled:text-zinc-700;
+}
+
+.react-calendar__month-view__weekdays {
+  @apply text-center font-bold uppercase text-[10px] text-zinc-500 mb-2;
+}
+
+.react-calendar__month-view__days__day {
+  @apply aspect-square flex flex-col items-center justify-center p-0 rounded-xl transition-colors relative h-12;
+}
+
+.react-calendar__tile {
+  @apply bg-none border-none outline-none text-zinc-400 font-bold text-sm h-12;
+}
+
+.react-calendar__tile:enabled:hover,
+.react-calendar__tile:enabled:focus {
+  @apply bg-zinc-800 text-zinc-100;
+}
+
+.react-calendar__tile--now {
+  @apply bg-zinc-800/50 text-blue-400;
+}
+
+.react-calendar__tile--active {
+  @apply bg-zinc-100 !text-zinc-950;
+}
+
+.react-calendar__month-view__days__day--neighboringMonth {
+  @apply text-zinc-800;
+}
+
+.dot-indicator {
+  @apply w-1 h-1 rounded-full;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}

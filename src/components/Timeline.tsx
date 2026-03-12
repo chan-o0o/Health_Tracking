@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { db, type HealthLog } from '../db/db';
 import { format, differenceInMinutes } from 'date-fns';
 import { Utensils, Dumbbell, Scale } from 'lucide-react';
+import PhotoModal from './PhotoModal';
 
 interface TimelineProps {
   refreshTrigger: number;
@@ -9,6 +10,7 @@ interface TimelineProps {
 
 export default function Timeline({ refreshTrigger }: TimelineProps) {
   const [logs, setLogs] = useState<HealthLog[]>([]);
+  const [selectedPhoto, setSelectedPhoto] = useState<Blob | null>(null);
 
   useEffect(() => {
     const fetchLogs = async () => {
@@ -20,7 +22,7 @@ export default function Timeline({ refreshTrigger }: TimelineProps) {
 
   const groupLogsByDay = () => {
     const groups: Record<string, HealthLog[]> = {};
-    logs.forEach(log => {
+    logs.slice(0, 10).forEach(log => { // Limit to recent logs for quick timeline
       const day = format(new Date(log.timestamp), 'yy.MM.dd');
       if (!groups[day]) groups[day] = [];
       groups[day].push(log);
@@ -39,6 +41,9 @@ export default function Timeline({ refreshTrigger }: TimelineProps) {
 
   return (
     <div className="space-y-6">
+      {selectedPhoto && (
+        <PhotoModal photo={selectedPhoto} onClose={() => setSelectedPhoto(null)} />
+      )}
       {Object.entries(dayGroups).map(([day, dayLogs]) => (
         <div key={day} className="space-y-3">
           <div className="flex items-center gap-2">
@@ -71,7 +76,7 @@ export default function Timeline({ refreshTrigger }: TimelineProps) {
                     </div>
                     {log.data.note && (
                       <div className="ml-14 p-3 bg-zinc-800/50 rounded-xl border border-zinc-700/30">
-                        <p className="text-sm italic text-zinc-400 leading-relaxed font-medium">
+                        <p className="text-sm italic text-zinc-400 leading-relaxed font-medium whitespace-pre-line">
                           "{log.data.note}"
                         </p>
                       </div>
@@ -121,7 +126,11 @@ export default function Timeline({ refreshTrigger }: TimelineProps) {
                     {log.data.photos && log.data.photos.length > 0 && (
                         <div className="flex gap-2 ml-14">
                             {log.data.photos.map((photo: Blob, idx: number) => (
-                                <div key={idx} className="w-20 h-20 rounded-xl overflow-hidden border border-zinc-800 shadow-lg">
+                                <div 
+                                    key={idx} 
+                                    className="w-20 h-20 rounded-xl overflow-hidden border border-zinc-800 shadow-lg active:scale-95 transition-transform cursor-pointer"
+                                    onClick={() => setSelectedPhoto(photo)}
+                                >
                                     <img 
                                         src={URL.createObjectURL(photo)} 
                                         alt="Progress" 

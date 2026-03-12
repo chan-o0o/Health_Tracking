@@ -41,12 +41,15 @@ export default function FastingSection({ onUpdate }: FastingSectionProps) {
   const handleToggle = async () => {
     const isCurrentlyEating = lastLog?.data.isEating ?? false;
     
+    // Clean up the note before saving
+    const finalNote = eatingNote.trim().replace(/\n/g, ' | ');
+
     await db.logs.add({
       type: 'fasting',
       timestamp: new Date(),
       data: { 
         isEating: !isCurrentlyEating,
-        note: isCurrentlyEating ? eatingNote : undefined
+        note: isCurrentlyEating ? finalNote : undefined
       }
     });
     
