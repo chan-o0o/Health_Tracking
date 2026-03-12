@@ -38,20 +38,20 @@ function App() {
       </main>
 
       {/* Bottom Navigation */}
-      <nav className="fixed bottom-0 left-0 right-0 bg-zinc-950/80 backdrop-blur-xl border-t border-zinc-900 px-6 py-5 flex justify-around items-center z-50 max-w-md mx-auto">
+      <nav className="fixed bottom-0 left-0 right-0 bg-zinc-950/80 backdrop-blur-xl border-t border-zinc-900 px-6 pt-3 pb-[calc(env(safe-area-inset-bottom)+0.75rem)] flex justify-around items-center z-50 max-w-md mx-auto">
         <button 
           onClick={() => setActiveTab('today')}
-          className={`flex flex-col items-center gap-1.5 transition-colors ${activeTab === 'today' ? 'text-zinc-100' : 'text-zinc-600'}`}
+          className={`flex flex-col items-center gap-1 transition-colors ${activeTab === 'today' ? 'text-zinc-100' : 'text-zinc-600'}`}
         >
-          <Home className="w-8 h-8" />
-          <span className="text-xs font-bold uppercase tracking-widest">Today</span>
+          <Home className="w-6 h-6" />
+          <span className="text-[10px] font-bold uppercase tracking-widest">Today</span>
         </button>
         <button 
           onClick={() => setActiveTab('history')}
-          className={`flex flex-col items-center gap-1.5 transition-colors ${activeTab === 'history' ? 'text-zinc-100' : 'text-zinc-600'}`}
+          className={`flex flex-col items-center gap-1 transition-colors ${activeTab === 'history' ? 'text-zinc-100' : 'text-zinc-600'}`}
         >
-          <HistoryIcon className="w-8 h-8" />
-          <span className="text-xs font-bold uppercase tracking-widest">History</span>
+          <HistoryIcon className="w-6 h-6" />
+          <span className="text-[10px] font-bold uppercase tracking-widest">History</span>
         </button>
       </nav>
     </div>
