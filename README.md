@@ -2,6 +2,8 @@
 
 A mobile-first health tracking application for fasting, workouts, and weight.
 
+**I completed it using only gemini CLI**
+
 ## Features
 - **Fasting:** Single-toggle "Ate" button with real-time timer and history.
 - **Workout:** Start/End recording with muscle group selection and duration tracking.
@@ -43,5 +45,3 @@ A mobile-first health tracking application for fasting, workouts, and weight.
 3. Select **Add to Home Screen**.
 
 
-npm run dev
-npm run build follwing by npx vite preview.
