@@ -163,24 +163,27 @@ export default function HistorySection({ refreshTrigger }: HistorySectionProps) 
       )}
 
       {/* Quick Stats */}
-      <div className="space-y-4">
+      <div className="space-y-6">
         {isCurrentlyFasting && (
-          <div className="card mb-0 bg-orange-500/10 border-orange-500/20 flex flex-col items-center justify-center p-6 border-2 border-dashed">
-            <span className="text-xs uppercase text-orange-500 font-black tracking-widest mb-2 flex items-center gap-2">
+          <div className="card mb-2 bg-orange-500/10 border-orange-500/20 flex flex-col items-center justify-center p-8 border-2 border-dashed rounded-[2.5rem]">
+            <span className="text-xs uppercase text-orange-500 font-black tracking-widest mb-3 flex items-center gap-2">
               <span className="w-2 h-2 bg-orange-500 rounded-full animate-pulse" />
               Real-time Fasting
             </span>
-            <span className="text-4xl font-black text-orange-500 font-mono tracking-tight">{fastingElapsed}</span>
+            <span className="text-5xl font-black text-orange-500 font-mono tracking-tight">{fastingElapsed}</span>
           </div>
         )}
         <div className="grid grid-cols-2 gap-4">
-          <div className="card mb-0 flex flex-col items-center justify-center p-5">
-            <span className="text-xs uppercase text-zinc-500 font-black tracking-widest mb-1">Workouts this week</span>
+          <div className="card mb-0 flex flex-col items-center justify-center p-6 bg-zinc-900/40 border-zinc-800/60 rounded-[2rem]">
+            <span className="text-[10px] uppercase text-zinc-500 font-black tracking-widest mb-2 text-center">Workouts this week</span>
             <span className="text-3xl font-black text-blue-500">{workoutCount}</span>
           </div>
-          <div className="card mb-0 flex flex-col items-center justify-center p-5">
-            <span className="text-xs uppercase text-zinc-500 font-black tracking-widest mb-1">Latest Weight</span>
-            <span className="text-3xl font-black text-emerald-500">{latestWeight}<small className="text-sm ml-1 font-bold">kg</small></span>
+          <div className="card mb-0 flex flex-col items-center justify-center p-6 bg-zinc-900/40 border-zinc-800/60 rounded-[2rem]">
+            <span className="text-[10px] uppercase text-zinc-500 font-black tracking-widest mb-2 text-center">Latest Weight</span>
+            <span className="text-3xl font-black text-emerald-500">
+              {latestWeight}
+              <span className="text-sm ml-1 font-bold text-emerald-500/60 uppercase">kg</span>
+            </span>
           </div>
         </div>
       </div>

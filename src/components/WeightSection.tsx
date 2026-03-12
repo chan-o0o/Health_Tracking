@@ -81,7 +81,7 @@ export default function WeightSection({ onUpdate }: WeightSectionProps) {
 
       <div className="space-y-4">
         <div className="flex gap-3">
-          <div className="relative flex-1">
+          <div className="relative flex-1 group">
             <input
               type="number"
               inputMode="decimal"
@@ -89,12 +89,14 @@ export default function WeightSection({ onUpdate }: WeightSectionProps) {
               value={weight}
               onChange={(e) => setWeight(e.target.value)}
               placeholder="78.5"
-              className="w-full bg-zinc-800 border border-zinc-700 rounded-2xl h-20 px-6 text-3xl font-black focus:outline-none focus:border-emerald-500 transition-colors relative z-10"
+              className="w-full bg-zinc-800 border border-zinc-700 rounded-2xl h-20 px-6 text-3xl font-black focus:outline-none focus:border-emerald-500 transition-colors relative z-0"
             />
-            <span className="absolute right-6 top-1/2 -translate-y-1/2 text-zinc-500 font-black uppercase text-base z-0">kg</span>
+            <span className="absolute right-6 top-1/2 -translate-y-1/2 text-zinc-500 font-black uppercase text-base z-10 pointer-events-none">
+              kg
+            </span>
           </div>
 
-          <label className="w-20 h-20 bg-zinc-800 border-2 border-dashed border-zinc-700 rounded-2xl flex items-center justify-center active:bg-zinc-700 cursor-pointer shadow-inner">
+          <label className="w-20 h-20 bg-zinc-800 border-2 border-dashed border-zinc-700 rounded-2xl flex items-center justify-center active:bg-zinc-700 cursor-pointer shadow-inner shrink-0">
             <Camera className="w-8 h-8 text-zinc-500" />
             <input
               type="file"
@@ -107,13 +109,13 @@ export default function WeightSection({ onUpdate }: WeightSectionProps) {
         </div>
 
         {previewUrls.length > 0 && (
-          <div className="flex gap-2">
+          <div className="flex gap-2 overflow-x-auto pb-2 no-scrollbar">
             {previewUrls.map((url, i) => (
-              <div key={i} className="relative w-20 h-20 rounded-2xl overflow-hidden group shadow-lg">
+              <div key={i} className="relative w-20 h-20 rounded-2xl overflow-hidden shrink-0 shadow-lg">
                 <img src={url} alt="Progress" className="w-full h-full object-cover" />
                 <button
                   onClick={() => removePhoto(i)}
-                  className="absolute top-1.5 right-1.5 bg-black/70 rounded-full p-1 shadow-md"
+                  className="absolute top-1.5 right-1.5 bg-black/70 rounded-full p-1 shadow-md active:scale-90"
                 >
                   <X className="w-4 h-4 text-white" />
                 </button>
@@ -124,8 +126,10 @@ export default function WeightSection({ onUpdate }: WeightSectionProps) {
 
         <button
           onClick={handleSave}
+          onPointerDown={(e) => e.currentTarget.classList.add('scale-95')}
+          onPointerUp={(e) => e.currentTarget.classList.remove('scale-95')}
           disabled={!weight || isSaving}
-          className={`btn-large ${isSaving ? 'bg-zinc-700' : 'bg-emerald-500 shadow-lg shadow-emerald-500/20'} text-white active:bg-emerald-600 disabled:opacity-50`}
+          className={`btn-large ${isSaving ? 'bg-zinc-700' : 'bg-emerald-500 shadow-lg shadow-emerald-500/20'} text-white active:scale-95 transition-transform disabled:opacity-50`}
         >
           <Scale className="w-8 h-8 mr-2" />
           {isSaving ? 'Saving...' : 'Add Weight'}
