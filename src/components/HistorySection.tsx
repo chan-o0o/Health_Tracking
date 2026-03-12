@@ -287,7 +287,7 @@ export default function HistorySection({ refreshTrigger }: HistorySectionProps) 
 
                         <button 
                           onClick={() => handleDelete(log.id!)}
-                          className="opacity-0 group-hover:opacity-100 p-2 text-zinc-700 hover:text-red-500 transition-opacity"
+                          className="p-2 text-red-500/80 active:text-red-600 transition-colors"
                         >
                           <Trash2 className="w-5 h-5" />
                         </button>
