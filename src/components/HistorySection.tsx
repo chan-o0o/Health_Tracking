@@ -51,7 +51,7 @@ export default function HistorySection({ refreshTrigger }: HistorySectionProps) 
         const formattedLogs = json.map(log => ({
           ...log,
           timestamp: new Date(log.timestamp),
-          id: undefined // New ID for each entry to avoid collisions
+          id: undefined 
         }));
 
         await db.logs.bulkAdd(formattedLogs);
@@ -105,7 +105,6 @@ export default function HistorySection({ refreshTrigger }: HistorySectionProps) 
 
   const filteredLogs = filter === 'all' ? logs : logs.filter(l => l.type === filter);
 
-  // Grouping logic for the list view
   const groupLogsByDay = () => {
     const groups: Record<string, HealthLog[]> = {};
     const sourceLogs = viewMode === 'calendar' 
@@ -129,7 +128,6 @@ export default function HistorySection({ refreshTrigger }: HistorySectionProps) 
     return hours > 0 ? `${hours}h ${minutes}m` : `${minutes}m`;
   };
 
-  // Stats for the week
   const now = new Date();
   const weekStart = startOfWeek(now);
   const weekEnd = endOfWeek(now);
@@ -139,7 +137,6 @@ export default function HistorySection({ refreshTrigger }: HistorySectionProps) 
   const lastWeightLog = logs.find(l => l.type === 'weight');
   const latestWeight = lastWeightLog ? lastWeightLog.data.value : '-';
 
-  // Calendar tile content (dots)
   const getTileContent = ({ date, view }: { date: Date, view: string }) => {
     if (view !== 'month') return null;
 
@@ -343,6 +340,9 @@ export default function HistorySection({ refreshTrigger }: HistorySectionProps) 
               </div>
             </div>
           ))
+        )}
+      </div>
+
       {/* Data Management */}
       <div className="pt-10 mt-10 border-t border-zinc-900 flex flex-col gap-5">
         <h3 className="text-xs font-black text-zinc-500 uppercase tracking-widest text-center">Data Management</h3>
