@@ -8,10 +8,10 @@ export default defineConfig({
     react(),
     VitePWA({
       registerType: 'autoUpdate',
-      includeAssets: ['favicon.ico', 'apple-touch-icon.png', 'mask-icon.svg'],
+      includeAssets: ['app-icon.svg'],
       manifest: {
-        name: 'Health Trak',
-        short_name: 'HealthTrak',
+        name: 'Health Tracker',
+        short_name: 'Health',
         description: 'Track fasting, workout and weight',
         theme_color: '#09090b',
         background_color: '#09090b',
@@ -19,19 +19,9 @@ export default defineConfig({
         orientation: 'portrait',
         icons: [
           {
-            src: 'pwa-192x192.png',
-            sizes: '192x192',
-            type: 'image/png'
-          },
-          {
-            src: 'pwa-512x512.png',
+            src: 'app-icon.svg',
             sizes: '512x512',
-            type: 'image/png'
-          },
-          {
-            src: 'pwa-512x512.png',
-            sizes: '512x512',
-            type: 'image/png',
+            type: 'image/svg+xml',
             purpose: 'any maskable'
           }
         ]
